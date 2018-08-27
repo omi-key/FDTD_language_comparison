@@ -27,15 +27,21 @@ for n = 0:Nstep
 
 	# 更新（ここが FDTD の本体）
 	# 粒子速度の更新
-    @inbounds for i=2:NX, j=1:NY
-        Vx[i,j] += - dt / (ρ * dx) * ( P[i,j] - P[i-1,j] );
+    @inbounds for j=1:NY
+        @simd for i=2:NX
+            Vx[i,j] += - dt / (ρ * dx) * ( P[i,j] - P[i-1,j] )
+        end
     end
-    @inbounds for i=1:NX, j=2:NY
-        Vy[i,j] += - dt / (ρ * dx) * ( P[i,j] - P[i,j-1] );
+    @inbounds for j=2:NY
+        @simd for i=1:NX
+            Vy[i,j] += - dt / (ρ * dx) * ( P[i,j] - P[i,j-1] )
+        end
 	end
     # 音圧の更新
-    @inbounds for i=1:NX, j=1:NY
-	    P[i,j] += - ( κ * dt / dx ) * ( ( Vx[i+1,j] - Vx[i,j] ) + ( Vy[i,j+1] - Vy[i,j] ) );
+    @inbounds for j=1:NY
+        @simd for i=1:NX
+	        P[i,j] += - ( κ * dt / dx ) * ( ( Vx[i+1,j] - Vx[i,j] ) + ( Vy[i,j+1] - Vy[i,j] ) )
+        end
     end
 	# 初期波形を準備（正弦波×１波 with ハン窓）
 	if n < (1.0/freq)/dt

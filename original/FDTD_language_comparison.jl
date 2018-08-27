@@ -8,7 +8,7 @@ NY = 400								# 空間セル数 Y [pixels]
 dx = 0.01								# 空間刻み [m]
 dt = 20.0e-6							# 時間刻み [s]
 
-Nstep = 10000								# 計算ステップ数 [回]
+Nstep = 1000								# 計算ステップ数 [回]
 
 freq = 1.0e3							# 初期波形の周波数 [Hz]
 
@@ -42,10 +42,10 @@ for n = 0:Nstep
 
 	# 音源
 	P[Int32(floor(NX/4+1)),Int32(floor(NY/3+1))] = sig
-	#@printf("%5d / %5d\r", n, Nstep);
-#=
+
 	# 波形ファイル出力（時刻, 音源, 中央点の音圧）
 	write(waveformfile,"$(dt*n)\t$sig\t$(P[Int32(floor(NX/2+1)),Int32(floor(NY/2+1))])\n")
+	@printf("%5d / %5d\r", n, Nstep);
 
 	# 音圧分布ファイル出力（50ステップ毎）
 	if n % 50 == 0
@@ -59,7 +59,6 @@ for n = 0:Nstep
 		end
 		close(fieldfile)
 	end
-=#
 end
 
 # 事後処理 #########################################################
