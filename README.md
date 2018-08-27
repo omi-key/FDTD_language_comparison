@@ -1,12 +1,14 @@
 手を入れてみました
 
 オリジナル版: 25.02s user 4.89s system 101% cpu 29.414 total
+
 修正版: 5.24s user 0.47s system 109% cpu 5.220 total
+
 †SIMD†: 1.50s user 0.41s system 134% cpu 1.412 total
 
 i7-8700K @ 3.70GHz
 
-https://qiita.com/omi\_UT/items/a436ac1c77c20efe4e1d
+https://qiita.com/omi_UT/items/a436ac1c77c20efe4e1d
 
 ***
 以下オリジナル版
